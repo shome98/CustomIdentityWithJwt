@@ -1,0 +1,128 @@
+﻿@* @using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+@model IEnumerable<ApplicationUser>
+
+<h2>All Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.FullName</td>
+                <td>@user.Address</td>
+                <td>
+                    <a asp-controller="Account" asp-action="EditUser" asp-route-id="@user.Id">Edit</a> |
+                    @if (await UserManager.IsLockedOutAsync(user))
+                    {
+                        <a asp-controller="Account" asp-action="UnlockUser" asp-route-id="@user.Id">Unlock</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="LockUser" asp-route-id="@user.Id">Lock</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+ *@
+@* @using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model IEnumerable<ApplicationUser>
+
+<h2>All Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.FullName</td>
+                <td>@user.Address</td>
+                <td>
+                    <a asp-controller="Account" asp-action="EditUser" asp-route-id="@user.Id">Edit</a> |
+                    @if (await UserManager.IsLockedOutAsync(user))
+                    {
+                        <a asp-controller="Account" asp-action="UnlockUser" asp-route-id="@user.Id">Unlock</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="LockUser" asp-route-id="@user.Id">Lock</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> *@
+
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model IEnumerable<ApplicationUser>
+
+<h2>All Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.FullName</td>
+                <td>@user.Address</td>
+                <td>
+                    <a asp-controller="Account" asp-action="EditUser" asp-route-id="@user.Id">Edit</a> |
+
+                    <!-- Use a form for the lock/unlock actions -->
+                    @if (await UserManager.IsLockedOutAsync(user))
+                    {
+                        <form asp-controller="Account" asp-action="UnlockUser" asp-route-id="@user.Id" method="post">
+                            <button type="submit">Unlock</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-controller="Account" asp-action="LockUser" asp-route-id="@user.Id" method="post">
+                            <button type="submit">Lock</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
